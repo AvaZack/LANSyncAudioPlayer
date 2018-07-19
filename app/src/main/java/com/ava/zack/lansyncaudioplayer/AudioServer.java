@@ -312,7 +312,8 @@ public class AudioServer implements DecoderCallback {
     private static final boolean DBG = true;
 
     public static final String DEFAULT_ONLINE_STREAM_AUDIO_URL =
-        "http://other.web.ri01.sycdn.kuwo.cn/resource/n3/40/17/494834159.mp3";
+        //"http://other.web.ri01.sycdn.kuwo.cn/resource/n3/40/17/494834159.mp3";//影子王菲
+    "http://other.web.rc01.sycdn.kuwo.cn/resource/n2/40/44/2884479513.mp3";//今晚xxx仓木麻衣孙燕姿
     private long DEQUEUE_BUFFER_TIMEOUT_USEC = 100000L;
 
     private boolean isDecoding = false;

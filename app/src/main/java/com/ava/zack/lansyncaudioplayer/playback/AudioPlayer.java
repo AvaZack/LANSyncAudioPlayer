@@ -298,6 +298,11 @@ public class AudioPlayer {
                 Log.d(TAG, "sampleTime seek to 0 :" + extractor.getSampleTime());
               }
 
+              try {
+                Thread.sleep(10000);
+              } catch (InterruptedException e) {
+                e.printStackTrace();
+              }
               // Use BUFFER_FLAG_CODEC_CONFIG instead.
               extractor.seekTo(0, MediaExtractor.SEEK_TO_CLOSEST_SYNC);
               chunkSize = extractor.readSampleData(inputBuf, 0);

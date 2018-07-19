@@ -168,7 +168,7 @@ public class AudioClient {
         int sampleRate = ByteBuffer.wrap(fourBytes).getInt();
         Log.d(TAG, "config audioTrack, sampleRate=" + sampleRate);
         int channel = 0;
-        if((size = is.read(fourBytes)) == 4){
+        if ((size = is.read(fourBytes)) == 4) {
           channel = ByteBuffer.wrap(fourBytes).getInt();
         }
         //synchronous init
@@ -198,12 +198,16 @@ public class AudioClient {
 
           //FIXME maybe expected data is not available?
           //should we sleep a little while to wait?
-          Thread.sleep(20);
 
           if ((size = is.read(rawDataBuffer, 0, length)) == length) {
             mPlayer.output(rawDataBuffer, 0, length);
           } else {
             Log.d(TAG, "getting raw data, expected=" + length + ", read=" + size);
+            int lengthLeft = length - size;
+            while (lengthLeft > 0) {
+              lengthLeft -= is.read(rawDataBuffer, 0, lengthLeft);
+              Log.d(TAG, "clear dirty data left=" + lengthLeft);
+            }
           }
         } else {
           Log.d(TAG, "getting chunk size, expected 4 bytes, read=" + size);
@@ -218,8 +222,6 @@ public class AudioClient {
       //}
     } catch (IOException e) {
       Log.e(TAG, "receiving socket broken, restart device scanning", e);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
     }
   }
 
